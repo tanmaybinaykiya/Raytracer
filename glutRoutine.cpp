@@ -12,10 +12,11 @@ void reshape (int w, int h)
 }
 void display(void)
 {
+	scene *myScene=scene::getInstance();
 	glClearColor(0,0,0,0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	if(myScene.rayT){
+	if(myScene->rayT){
 		rtRoutine();
 	}
 	else{
@@ -29,15 +30,16 @@ void display(void)
 
 void keyboard (unsigned char key, int x, int y)
 {
+	scene *myScene=scene::getInstance();
 	switch (key) {
 
 		case 'r':
-			myScene.rayT=!myScene.rayT;
+			myScene->rayT=!myScene->rayT;
 			glutPostRedisplay();
 			break;
 
 		case 'w':
-			myScene.eye.z+=.2;
+			myScene->eye.z+=(GLfloat).2;
 //			std::cout<<"W pressed \n";
 			raytrace();
 			glutPostRedisplay();
@@ -45,21 +47,21 @@ void keyboard (unsigned char key, int x, int y)
 			break;
 
 		case 'a':
-			myScene.eye.x-=.2;
+			myScene->eye.x-=(GLfloat).2;
 			//std::cout<<"A pressed \n";
 			raytrace();
 			glutPostRedisplay();
 			break;
 
 		case 's':
-			myScene.eye.z-=.2;
+			myScene->eye.z-=(GLfloat).2;
 			//std::cout<<"S pressed \n";
 			raytrace();
 			glutPostRedisplay();
 			break;
 
 		case 'd':
-			myScene.eye.x+=.2;
+			myScene->eye.x+=(GLfloat).2;
 			//std::cout<<"D pressed \n";
 			raytrace();
 			glutPostRedisplay();

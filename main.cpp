@@ -1,21 +1,17 @@
 #include "header.h"
 
-scene myScene;
-std::vector<vertex> vertices;
-std::vector<wEdge> edges;
-std::vector<face> faces;
-std::vector <std::vector<color> > buffer;
-
 int main(int argc, char **argv)
 {
-    buffer=initializeScene();
+
+	initializeScene();
+	initializeGeometry();
 	
-	input();
 	raytrace();
+	scene *myScene=scene::getInstance();
 	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(myScene.windowWidth,myScene.windowHeight);
+	glutInitWindowSize(myScene->windowWidth,myScene->windowHeight);
 	glutCreateWindow("My RayTracer");
     glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

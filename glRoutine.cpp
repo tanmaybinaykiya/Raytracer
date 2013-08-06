@@ -31,31 +31,33 @@ for(i=0;i<11;i++){
 	}
 }
 void drawByEdge(){
+	geometry *myGeometry=geometry::getInstance();
 	int i=0;
-  	int	edgeNum=edges.size();
+  	int	edgeNum=myGeometry->edges.size();
 	glTranslatef(-.5,0,-.5);
 	glColor3f(1,1,1);
 	for (i=0;i<edgeNum;i++){
 		glBegin(GL_LINES);
-            glVertex3f(vertices[edges[i].v1].x,vertices[edges[i].v1].y,vertices[edges[i].v1].z);
-            glVertex3f(vertices[edges[i].v2].x,vertices[edges[i].v2].y,vertices[edges[i].v2].z);
+            glVertex3f(myGeometry->vertices[myGeometry->edges[i].v1].x,myGeometry->vertices[myGeometry->edges[i].v1].y,myGeometry->vertices[myGeometry->edges[i].v1].z);
+            glVertex3f(myGeometry->vertices[myGeometry->edges[i].v2].x,myGeometry->vertices[myGeometry->edges[i].v2].y,myGeometry->vertices[myGeometry->edges[i].v2].z);
         glEnd();
      }
 }
 void drawByQuads(void ){
+	geometry *myGeometry=geometry::getInstance();
 	int i=0,j=0;
-  	int	faceNum=faces.size();
+  	int	faceNum=myGeometry->faces.size();
 	for(i=0;i<faceNum;i++){
 		glColor3f((GLfloat)i/faceNum,(GLfloat)1-i/faceNum,0);
 		glBegin(GL_QUADS);
 		for(j=0;j<4;j++){
-			if (edges[faces[i].edge[j]].rightFace==i){
-				glVertex3f(vertices[edges[faces[i].edge[j]].v1].x,vertices[edges[faces[i].edge[j]].v1].y,vertices[edges[faces[i].edge[j]].v1].z);
-				glVertex3f(vertices[edges[faces[i].edge[j]].v2].x,vertices[edges[faces[i].edge[j]].v2].y,vertices[edges[faces[i].edge[j]].v2].z);
+			if (myGeometry->edges[myGeometry->faces[i].edge[j]].rightFace==i){
+				glVertex3f(myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v1].x,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v1].y,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v1].z);
+				glVertex3f(myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v2].x,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v2].y,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v2].z);
 			}
 			else{
-				glVertex3f(vertices[edges[faces[i].edge[j]].v2].x,vertices[edges[faces[i].edge[j]].v2].y,vertices[edges[faces[i].edge[j]].v2].z);
-				glVertex3f(vertices[edges[faces[i].edge[j]].v1].x,vertices[edges[faces[i].edge[j]].v1].y,vertices[edges[faces[i].edge[j]].v1].z);
+				glVertex3f(myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v2].x,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v2].y,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v2].z);
+				glVertex3f(myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v1].x,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v1].y,myGeometry->vertices[myGeometry->edges[myGeometry->faces[i].edge[j]].v1].z);
 			}
 		}
 		glEnd();

@@ -4,11 +4,7 @@
 
 #include<GL/freeglut.h>
 #include<math.h>
-
-	class geometry{
-	public:
-		geometry();
-	};
+#include<vector>
 
     class wEdge;
 	class vertex{
@@ -43,6 +39,23 @@
 		wEdge(int a,int b);
 		wEdge(int v1,int v2,int f1,int f2);
 		
+	};
+
+	class geometry{
+	private:
+		static bool instanceFlag;
+		static geometry* instance;
+		geometry();
+
+	public:
+		std::vector<vertex> vertices;
+		std::vector<wEdge> edges;
+		std::vector<face> faces;
+		static geometry* getInstance();
+
+		geometry::~geometry(){
+			instanceFlag=false;
+		}
 	};
 
 #endif

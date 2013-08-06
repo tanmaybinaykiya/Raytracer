@@ -1,6 +1,8 @@
 #include "header.h"
 
 void input(){
+	geometry *myGeometry=geometry::getInstance();
+
 	FILE *file = fopen ( filename, "r" );
 	int vMax=0;
 	if (file != NULL){
@@ -13,8 +15,8 @@ void input(){
 					GLfloat x,y,z;
 					sscanf (line,"v %f,%f,%f ",&x, &y, &z);
 					//std::cout<<"Vertex detected: "<<x<<","<<y<<","<<z<<",\n";
-					vertices.push_back(vertex(x,y,z));
-					vMax=vertices.size();
+					myGeometry->vertices.push_back(vertex(x,y,z));
+					vMax=myGeometry->vertices.size();
 				}
 				else if(line[0]=='f'){
 					int v1,v2,v3,v4;
@@ -25,10 +27,10 @@ void input(){
 							break;
 						}
 						else{
-							int fNum=faces.size();
+							int fNum=myGeometry->faces.size();
 							//std::cout<<"Face detected: "<<v1<<","<<v2<<","<<v3<<","<<v4<<"\n";
 							//std::cout<<"FACE CONTAINS "<<faces.size()<<"\n";						
-							faces.push_back(face(v1,v2,v3,v4));
+							myGeometry->faces.push_back(face(v1,v2,v3,v4));
 							//std::cout<<faces.size()<<"th face created \n";
 						}
 					}
@@ -49,36 +51,38 @@ void input(){
 	//inputReport();
 }
 int twinExists(int vert1,int vert2){
-	int totEdges=edges.size();
+	geometry *myGeometry=geometry::getInstance();
+	int totEdges=myGeometry->edges.size();
 	int i;
 	for(i=0;i<totEdges;i++){
-		if ((edges[i].v1==vert1 && edges[i].v2==vert2 )||(edges[i].v1==vert2 && edges[i].v2==vert1 )){
+		if ((myGeometry->edges[i].v1==vert1 && myGeometry->edges[i].v2==vert2 )||(myGeometry->edges[i].v1==vert2 && myGeometry->edges[i].v2==vert1 )){
 			return i;
 		}
 	}
 	return -1;
 }
 void inputReport(void){
+	geometry *myGeometry=geometry::getInstance();
 	int i=0,max=0;
-	max=edges.size();
+	max=myGeometry->edges.size();
 	std::cout<<"\nEdges : \n";
 	std::cout<<"------------------------------------------------------------------------------ \n";
 	std::cout<<"Edge No. V1 \t V2  LeftPrev LeftNext  RightPrev RightNext LeftFace Right Face \n";
 	std::cout<<"------------------------------------------------------------------------------ \n";
 
 	for (i=0;i<max;i++){
-		std::cout<<"  "<<i<<" \t "<<edges[i].v1<<" \t "<<edges[i].v2<<" \t  ";
-		std::cout<<edges[i].leftPrev<<"  \t "<<edges[i].leftNext<<" \t   ";
-		std::cout<<edges[i].rightPrev<<"  \t    "<<edges[i].rightNext<<"    \t ";
-		std::cout<<edges[i].leftFace<<"  \t    "<<edges[i].rightFace<<" \n";
+		std::cout<<"  "<<i<<" \t "<<myGeometry->edges[i].v1<<" \t "<<myGeometry->edges[i].v2<<" \t  ";
+		std::cout<<myGeometry->edges[i].leftPrev<<"  \t "<<myGeometry->edges[i].leftNext<<" \t   ";
+		std::cout<<myGeometry->edges[i].rightPrev<<"  \t    "<<myGeometry->edges[i].rightNext<<"    \t ";
+		std::cout<<myGeometry->edges[i].leftFace<<"  \t    "<<myGeometry->edges[i].rightFace<<" \n";
 	}
 
-	max=faces.size();
+	max=myGeometry->faces.size();
 	std::cout<<"\nFaces : \n";
 	std::cout<<"------------------------------------ \n";
 	std::cout<<"Face No. E1 \t E2 \t E3 \t E4 \n";
 	std::cout<<"------------------------------------ \n";
 	for (i=0;i<max;i++){
-		std::cout<<"  "<<i<<" \t "<<faces[i].edge[0]<<" \t "<<faces[i].edge[1]<<" \t "<<faces[i].edge[2]<<" \t "<<faces[i].edge[3]<<"\n";
+		std::cout<<"  "<<i<<" \t "<<myGeometry->faces[i].edge[0]<<" \t "<<myGeometry->faces[i].edge[1]<<" \t "<<myGeometry->faces[i].edge[2]<<" \t "<<myGeometry->faces[i].edge[3]<<"\n";
 	}
 }

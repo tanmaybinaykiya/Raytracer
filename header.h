@@ -14,16 +14,6 @@
 	#include "scene.h"
 	#include "sphere.h"
 
-	extern GLboolean rayT;
-	extern vertex eye;
-	extern vertex viewPlane[4];
-	extern std::vector<vertex> vertices;
-	extern std::vector<face> faces;
-	extern std::vector<wEdge> edges;
-	extern sphere mySphere;
-	extern scene myScene;
-	extern std::vector<std::vector<color>> buffer;
-
 	const int screenW=300,screenH=300;
 	const GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 0.0};		// Red diffuse light.
 	const GLfloat light_position[] = {1.0, 1.0, 1.0, 1.0};	// Infinite light location.
@@ -35,6 +25,9 @@
 	void display(void);
 	void keyboard (unsigned char key, int x, int y);
 
+//	scene
+	void editScene(vertex i,vertex V1,vertex V2,vertex  V3,vertex V4,int w, int h);
+
 //	glRoutine	(WITHOUT RAYTRACER)
 	void initGL(void);
 	void drawGeometry(void);
@@ -45,7 +38,7 @@
 	void light(void);
 
 //	RTRoutine (RAYTRACER)
-	std::vector <std::vector<color> >  initializeScene(void);
+	void initializeScene(void);
 	void initializeGeometry(void);
 	void initRT(void);
 	color isHit(ray r);

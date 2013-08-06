@@ -3,10 +3,7 @@
 
 	#include "header.h"
 
-	geometry::geometry(){
-		memset(this,0,sizeof(geometry));
-	}
-	
+
 	
 	vertex::vertex(void){
 		x=y=z=0;
@@ -26,7 +23,8 @@
 	}
 	
 	face::face(int vert1,int vert2,int vert3,int vert4){
-
+		geometry *myGeometry=geometry::getInstance();	
+		
 		
 	// Check if twin of the edge exists
 
@@ -39,32 +37,32 @@
 		// According to the twin edge, create new edges if twin does not exist
 
 		if (e12==-1){
-			edges.push_back(wEdge(vert1,vert2));
-			edge[0]=edges.size()-1;
+			myGeometry->edges.push_back(wEdge(vert1,vert2));
+			edge[0]=myGeometry->edges.size()-1;
 		}
 		else{
 			edge[0]=e12;
 		}
 
 		if (e23==-1){
-			edges.push_back(wEdge(vert2,vert3));
-			edge[1]=edges.size()-1;
+			myGeometry->edges.push_back(wEdge(vert2,vert3));
+			edge[1]=myGeometry->edges.size()-1;
 		}
 		else{
 			edge[1]=e23;
 		}
 
 		if (e34==-1){
-			edges.push_back(wEdge(vert3,vert4));
-			edge[2]=edges.size()-1;
+			myGeometry->edges.push_back(wEdge(vert3,vert4));
+			edge[2]=myGeometry->edges.size()-1;
 		}
 		else{
 			edge[2]=e34;
 		}
 
 		if (e41==-1){
-			edges.push_back(wEdge(vert4,vert1));
-			edge[3]=edges.size()-1;
+			myGeometry->edges.push_back(wEdge(vert4,vert1));
+			edge[3]=myGeometry->edges.size()-1;
 		}
 		else{
 			edge[3]=e41;
@@ -72,13 +70,13 @@
 
 	// Setup face normals assuming the quad face is planar
 
-		GLfloat x21 = vertices[vert2].x-vertices[vert1].x;
-		GLfloat y21 = vertices[vert2].y-vertices[vert1].y;
-		GLfloat z21 = vertices[vert2].z-vertices[vert1].z;
+		GLfloat x21 = myGeometry->vertices[vert2].x-myGeometry->vertices[vert1].x;
+		GLfloat y21 = myGeometry->vertices[vert2].y-myGeometry->vertices[vert1].y;
+		GLfloat z21 = myGeometry->vertices[vert2].z-myGeometry->vertices[vert1].z;
 
-		GLfloat x32 = vertices[vert3].x-vertices[vert2].x;
-		GLfloat y32 = vertices[vert3].y-vertices[vert2].y;
-		GLfloat z32 = vertices[vert3].z-vertices[vert2].z;
+		GLfloat x32 = myGeometry->vertices[vert3].x-myGeometry->vertices[vert2].x;
+		GLfloat y32 = myGeometry->vertices[vert3].y-myGeometry->vertices[vert2].y;
+		GLfloat z32 = myGeometry->vertices[vert3].z-myGeometry->vertices[vert2].z;
 
 
 		normal.x=y21*z32 - z21*y32;
@@ -86,83 +84,83 @@
 		normal.z=x21*y32 - y21*x32;
 		normal.unitize();
 
-	// Setup faces for edges
+	// Setup faces for myGeometry->edges
 
-		int fSize=faces.size();
-		if (edges[edge[0]].rightFace==-1){
-			edges[edge[0]].rightFace=fSize;;
+		int fSize=myGeometry->faces.size();
+		if (myGeometry->edges[edge[0]].rightFace==-1){
+			myGeometry->edges[edge[0]].rightFace=fSize;;
 		}
 		else{
-			edges[edge[0]].leftFace=fSize;;
+			myGeometry->edges[edge[0]].leftFace=fSize;;
 		}
 
-		if (edges[edge[1]].rightFace==-1){
-			edges[edge[1]].rightFace=fSize;;
+		if (myGeometry->edges[edge[1]].rightFace==-1){
+			myGeometry->edges[edge[1]].rightFace=fSize;;
 		}
 		else{
-			edges[edge[1]].leftFace=fSize;;
+			myGeometry->edges[edge[1]].leftFace=fSize;;
 		}
 
-		if (edges[edge[2]].rightFace==-1){
-			edges[edge[2]].rightFace=fSize;;
+		if (myGeometry->edges[edge[2]].rightFace==-1){
+			myGeometry->edges[edge[2]].rightFace=fSize;;
 		}
 		else{
-			edges[edge[2]].leftFace=fSize;;
+			myGeometry->edges[edge[2]].leftFace=fSize;;
 		}
 
-		if (edges[edge[3]].rightFace==-1){
-			edges[edge[3]].rightFace=fSize;;
+		if (myGeometry->edges[edge[3]].rightFace==-1){
+			myGeometry->edges[edge[3]].rightFace=fSize;;
 		}
 		else{
-			edges[edge[3]].leftFace=fSize;;
+			myGeometry->edges[edge[3]].leftFace=fSize;;
 		}
 
-	//	Setup left and right edges for each edge
+	//	Setup left and right myGeometry->edges for each edge
 
 		//find whether the current face is in left or right and decide on the leftPrev ...
 
-		if (edges[edge[0]].rightFace==fSize){
+		if (myGeometry->edges[edge[0]].rightFace==fSize){
 			//add prev and next to right
-			edges[edge[0]].rightNext=edge[1];
-			edges[edge[0]].rightPrev=edge[3];
+			myGeometry->edges[edge[0]].rightNext=edge[1];
+			myGeometry->edges[edge[0]].rightPrev=edge[3];
 		}
 		else{
 			//add prev and next to left
-			edges[edge[0]].leftNext=edge[3];
-			edges[edge[0]].leftPrev=edge[1];
+			myGeometry->edges[edge[0]].leftNext=edge[3];
+			myGeometry->edges[edge[0]].leftPrev=edge[1];
 		}
 
-		if (edges[edge[1]].rightFace==fSize){
+		if (myGeometry->edges[edge[1]].rightFace==fSize){
 			//add prev and next to right
-			edges[edge[1]].rightNext=edge[2];
-			edges[edge[1]].rightPrev=edge[0];
+			myGeometry->edges[edge[1]].rightNext=edge[2];
+			myGeometry->edges[edge[1]].rightPrev=edge[0];
 		}
 		else{
 			//add prev and next to left
-			edges[edge[1]].leftNext=edge[0];
-			edges[edge[1]].leftPrev=edge[2];
+			myGeometry->edges[edge[1]].leftNext=edge[0];
+			myGeometry->edges[edge[1]].leftPrev=edge[2];
 		}
 
-		if (edges[edge[2]].rightFace==fSize){
+		if (myGeometry->edges[edge[2]].rightFace==fSize){
 			//add prev and next to right
-			edges[edge[2]].rightNext=edge[3];
-			edges[edge[2]].rightPrev=edge[1];
+			myGeometry->edges[edge[2]].rightNext=edge[3];
+			myGeometry->edges[edge[2]].rightPrev=edge[1];
 		}
 		else{
 			//add prev and next to left
-			edges[edge[2]].leftNext=edge[1];
-			edges[edge[2]].leftPrev=edge[3];
+			myGeometry->edges[edge[2]].leftNext=edge[1];
+			myGeometry->edges[edge[2]].leftPrev=edge[3];
 		}
 
-		if (edges[edge[3]].rightFace==fSize){
+		if (myGeometry->edges[edge[3]].rightFace==fSize){
 			//add prev and next to right
-			edges[edge[3]].rightNext=edge[0];
-			edges[edge[3]].rightPrev=edge[2];
+			myGeometry->edges[edge[3]].rightNext=edge[0];
+			myGeometry->edges[edge[3]].rightPrev=edge[2];
 		}
 		else{
 			//add prev and next to left
-			edges[edge[3]].leftNext=edge[2];
-			edges[edge[3]].leftPrev=edge[0];
+			myGeometry->edges[edge[3]].leftNext=edge[2];
+			myGeometry->edges[edge[3]].leftPrev=edge[0];
 		}
 
 		//std::cout<<"FACE CREATED \n";
@@ -188,6 +186,27 @@
 			leftFace=F1;
 			rightFace=F2;
 			leftNext=leftPrev=rightNext=rightPrev=-1;
+	}
+
+	bool geometry::instanceFlag = false;
+	geometry* geometry::instance = NULL;
+
+	geometry* geometry::getInstance()
+	{
+		if(! instanceFlag)
+		{
+			instance =new  geometry();
+			instanceFlag = true;
+			return instance;
+		}
+		else
+		{
+			return instance;
+		}
+	}
+
+	geometry::geometry(void){
+		memset(this,0,sizeof(geometry));
 	}
 
 	vertex diff(vertex a, vertex b){

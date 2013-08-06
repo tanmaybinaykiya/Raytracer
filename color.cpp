@@ -12,3 +12,6 @@ color::color(GLfloat R, GLfloat G,GLfloat B){
 	std::cout<<"Error in RGB values";
 	}
 }
+color color::operator+(const color& other){
+	return (color(r+other.r,g+other.g,b+other.b));
+}
