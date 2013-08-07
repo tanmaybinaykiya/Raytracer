@@ -78,9 +78,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="color.cpp" />
+    <ClCompile Include="geometry.cpp" />
     <ClCompile Include="glRoutine.cpp" />
     <ClCompile Include="glutRoutine.cpp" />
-    <ClCompile Include="geometry.cpp" />
+    <ClCompile Include="winged.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ray.cpp" />
@@ -91,14 +92,11 @@
   <ItemGroup>
     <ClInclude Include="color.h" />
     <ClInclude Include="geometry.h" />
+    <ClInclude Include="winged.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="sphere.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

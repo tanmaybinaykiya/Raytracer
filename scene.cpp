@@ -2,6 +2,7 @@
 
 	bool scene::instanceFlag = false;
 	scene* scene::instance = NULL;
+	
 	scene* scene::getInstance()
 	{
 		if(! instanceFlag)
@@ -15,10 +16,11 @@
 			return instance;
 		}
 	}
-
+	
 	scene::scene(void){
 		memset(this,0,sizeof(scene));
 	}
+	
 	void editScene(vertex i,vertex V1,vertex V2,vertex  V3,vertex V4,int w, int h){
 	scene *myScene=scene::getInstance();
 		myScene->eye=i;

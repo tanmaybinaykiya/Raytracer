@@ -39,14 +39,13 @@ void initRT(void ){
 }
 
 color isHit(ray r){
-	sphere mySphere[2];
-	mySphere[0]=sphere(vertex(0,0,0),.5);
-	mySphere[1]=sphere(vertex(1,1,5),.5);
-	int i=0;
+	geometry *myGeometry=geometry::getInstance();
+	int i=0,sphereNum=0;
+	sphereNum=myGeometry->spheres.size();
 	bool v=false;
 
-	for(i=0;i<2;i++){
-		v=v||isHitSphere(r,mySphere[i]);
+	for(i=0;i<sphereNum;i++){
+		v=v||isHitSphere(r,i);
 	}
 	if(true==v){
 		return shade(r);
@@ -64,11 +63,12 @@ bool isHitQuad(ray r){
 	return false;
 }
 
-bool isHitSphere(ray r,sphere s){
+bool isHitSphere(ray r,int i){
+	geometry *myGeometry=geometry::getInstance();
 
 	GLfloat a=dot(r.direction,r.direction);
-	GLfloat b=dot(diff(r.start,s.centre),r.direction);
-	GLfloat c=dot(diff(r.start,s.centre),diff(r.start,s.centre))-pow(s.radius,2);
+	GLfloat b=dot(diff(r.start,myGeometry->spheres[i].centre),r.direction);
+	GLfloat c=dot(diff(r.start,myGeometry->spheres[i].centre),diff(r.start,myGeometry->spheres[i].centre))-pow(myGeometry->spheres[i].radius,2);
 	GLfloat disc=(pow(b,2))-(a*c);				//discriminant
 
 	if (disc<0.01){
@@ -84,7 +84,7 @@ void raytrace(void){
 	// NEXT STEP for every pixel shoot a ray and intersect with the objects and return color if hit else black								DONE
 	// NEXT STEP for every pixel shoot a ray and intersect with the objects and calculate normals and evrything and return color using coefficients if hit else black
 	scene *myScene=scene::getInstance();
-	std::cout<<"TRACE BEGINS \n";
+	//std::cout<<"TRACE BEGINS \n";
 	GLfloat i=0,j=0;
 	GLfloat dx=1,dy=1,z=-myScene->planeV1.z,l,r,b,t;
 	const int sampleX=2*myScene->windowWidth;
@@ -121,7 +121,7 @@ void raytrace(void){
 		}
 	}
 */
-	std::cout<<"TRACE DONE\n";	
+	//std::cout<<"TRACE DONE\n";	
 }
 
 color shade(ray r){
@@ -130,7 +130,7 @@ color shade(ray r){
 
 void drawGeometryRT(){
 	scene *myScene=scene::getInstance();
-	std::cout<<"DRAW STARTS\n";	
+	//std::cout<<"DRAW STARTS\n";	
 
 	int i=0,j=0;
 	GLfloat dx=1,dy=1,z=-myScene->planeV1.z,l,r,b,t;
@@ -153,7 +153,7 @@ void drawGeometryRT(){
 				glEnd();
 		}
 	}
-	std::cout<<"DRAW COMPLETE\n";
+	//std::cout<<"DRAW COMPLETE\n";
 }
 
 void rtRoutine(void){

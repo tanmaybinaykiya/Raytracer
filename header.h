@@ -9,6 +9,7 @@
 	#include <math.h>
 
 	#include "color.h"
+	#include "winged.h"
 	#include "geometry.h"
 	#include "ray.h"
 	#include "scene.h"
@@ -43,7 +44,7 @@
 	void initRT(void);
 	color isHit(ray r);
 	bool isHitQuad(ray r,face);
-	bool isHitSphere(ray r,sphere c);
+	bool isHitSphere(ray r,int index);
 	void raytrace(void);
 	void drawGeometryRT();
 	void rtRoutine(void);

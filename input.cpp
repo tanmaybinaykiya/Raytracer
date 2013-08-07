@@ -1,6 +1,6 @@
 #include "header.h"
 
-void input(){
+void input(void){
 	geometry *myGeometry=geometry::getInstance();
 
 	FILE *file = fopen ( filename, "r" );
@@ -17,6 +17,11 @@ void input(){
 					//std::cout<<"Vertex detected: "<<x<<","<<y<<","<<z<<",\n";
 					myGeometry->vertices.push_back(vertex(x,y,z));
 					vMax=myGeometry->vertices.size();
+				}
+				else if(line[0]=='s'){
+					GLfloat r,x,y,z;
+					sscanf (line,"s %f,%f,%f,%f",&r, &x, &y, &z);
+					myGeometry->spheres.push_back(sphere(vertex(x,y,z),r));
 				}
 				else if(line[0]=='f'){
 					int v1,v2,v3,v4;

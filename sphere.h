@@ -2,7 +2,7 @@
 #define __SPHERE__
 
 	#include <GL/freeglut.h>
-	#include "geometry.h"
+	#include "winged.h"
 
 	class sphere{
 		public :
@@ -14,5 +14,5 @@
 		sphere(float a,float b,float c, float r);
 
 	};
-
+	
 #endif

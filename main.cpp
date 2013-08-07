@@ -2,12 +2,12 @@
 
 int main(int argc, char **argv)
 {
-
+	scene *myScene=scene::getInstance();
 	initializeScene();
 	initializeGeometry();
 	
 	raytrace();
-	scene *myScene=scene::getInstance();
+
 	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);

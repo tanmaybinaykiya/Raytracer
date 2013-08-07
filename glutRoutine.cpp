@@ -39,7 +39,7 @@ void keyboard (unsigned char key, int x, int y)
 			break;
 
 		case 'w':
-			myScene->eye.z+=(GLfloat).2;
+			myScene->eye.z+=(GLfloat).5;
 //			std::cout<<"W pressed \n";
 			raytrace();
 			glutPostRedisplay();
@@ -54,7 +54,7 @@ void keyboard (unsigned char key, int x, int y)
 			break;
 
 		case 's':
-			myScene->eye.z-=(GLfloat).2;
+			myScene->eye.z-=(GLfloat).5;
 			//std::cout<<"S pressed \n";
 			raytrace();
 			glutPostRedisplay();
