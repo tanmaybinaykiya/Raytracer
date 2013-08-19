@@ -42,6 +42,8 @@
 			wEdge(int v1,int v2,int f1,int f2);
 	};
 
+	vertex diff(vertex a, vertex b);
+	void unitize(vertex p);
 
 
 

@@ -36,4 +36,5 @@ vertex cross(vertex a,vertex b){
 	return vertex(x,y,z);
 }
 
+
 #endif

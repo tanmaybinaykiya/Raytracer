@@ -81,6 +81,7 @@
     <ClCompile Include="geometry.cpp" />
     <ClCompile Include="glRoutine.cpp" />
     <ClCompile Include="glutRoutine.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="winged.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -92,6 +93,7 @@
   <ItemGroup>
     <ClInclude Include="color.h" />
     <ClInclude Include="geometry.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="winged.h" />
     <ClInclude Include="header.h" />
     <ClInclude Include="ray.h" />

@@ -24,6 +24,7 @@ void initializeScene(void){
 }
 
 void initializeGeometry(){
+
 	input();
 }
 
@@ -43,17 +44,19 @@ color isHit(ray r){
 	int i=0,sphereNum=0;
 	sphereNum=myGeometry->spheres.size();
 	bool v=false;
+	int intersectionType=-1;
 
 	for(i=0;i<sphereNum;i++){
-		v=v||isHitSphere(r,i);
+		v=v||myGeometry->spheres[i].isHit(r);
+		intersectionType=SPHERE;
 	}
 	if(true==v){
-		return shade(r);
+		return shade(r,intersectionType);
 	}
 	else return color(0,0,0);
 }
 
-bool isHitQuad(ray r){
+bool isHitQuad(ray r, int index){
 	geometry *myGeometry=geometry::getInstance();
 	int numfaces=myGeometry->faces.size();
 	int	i=0;
@@ -63,25 +66,10 @@ bool isHitQuad(ray r){
 	return false;
 }
 
-bool isHitSphere(ray r,int i){
-	geometry *myGeometry=geometry::getInstance();
 
-	GLfloat a=dot(r.direction,r.direction);
-	GLfloat b=dot(diff(r.start,myGeometry->spheres[i].centre),r.direction);
-	GLfloat c=dot(diff(r.start,myGeometry->spheres[i].centre),diff(r.start,myGeometry->spheres[i].centre))-pow(myGeometry->spheres[i].radius,2);
-	GLfloat disc=(pow(b,2))-(a*c);				//discriminant
-
-	if (disc<0.01){
-		return false;
-	}
-	else {
-		return true;
-	}
-}
 
 void raytrace(void){
 	// for every pixel shoot a ray and intersect with the objects and return white if hit else black										DONE
-	// NEXT STEP for every pixel shoot a ray and intersect with the objects and return color if hit else black								DONE
 	// NEXT STEP for every pixel shoot a ray and intersect with the objects and calculate normals and evrything and return color using coefficients if hit else black
 	scene *myScene=scene::getInstance();
 	//std::cout<<"TRACE BEGINS \n";
@@ -124,7 +112,7 @@ void raytrace(void){
 	//std::cout<<"TRACE DONE\n";	
 }
 
-color shade(ray r){
+color shade(ray r,int i){
 	return color(1,1,1);
 }
 

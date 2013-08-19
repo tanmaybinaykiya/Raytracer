@@ -3,7 +3,8 @@
 
 	#include <GL/freeglut.h>
 	#include "winged.h"
-
+	#include "ray.h"
+	
 	class sphere{
 		public :
 			vertex centre;
@@ -12,7 +13,7 @@
 		sphere(void); 
 		sphere(vertex c, GLfloat r);
 		sphere(float a,float b,float c, float r);
-
+		bool isHit(ray r);
 	};
 	
 #endif
