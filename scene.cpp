@@ -21,14 +21,20 @@
 		memset(this,0,sizeof(scene));
 	}
 	
-	void editScene(vertex i,vertex V1,vertex V2,vertex  V3,vertex V4,int w, int h){
-	scene *myScene=scene::getInstance();
-		myScene->eye=i;
-		myScene->planeV1=V1;
-		myScene->planeV2=V2;
-		myScene->planeV3=V3;
-		myScene->planeV4=V4;
-		myScene->windowWidth=w;
-		myScene->windowHeight=h;
-		myScene->rayT=true;
+	void scene::editScene(vertex i,vertex V1,vertex V2,vertex  V3,vertex V4,int w, int h){
+		this->eye=i;
+		this->planeV1=V1;
+		this->planeV2=V2;
+		this->planeV3=V3;
+		this->planeV4=V4;
+		this->windowWidth=w;
+		this->windowHeight=h;
+		this->rayT=true;
+	}
+
+	void scene::editScreen(int w, int h){
+		this->windowWidth=w;
+		this->windowHeight=h;
+		std::vector <std::vector<color> > temp (2*this->windowHeight, std::vector<color>(2*this->windowWidth));
+		this->buffer=temp;
 	}

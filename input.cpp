@@ -19,9 +19,15 @@ void input(void){
 					vMax=myGeometry->vertices.size();
 				}
 				else if(line[0]=='s'){
-					GLfloat r,x,y,z;
-					sscanf (line,"s %f,%f,%f,%f",&r, &x, &y, &z);
-					myGeometry->spheres.push_back(sphere(vertex(x,y,z),r));
+					GLfloat r,x,y,z,red,g,b;
+					sscanf (line,"s %f,(%f,%f,%f),(%f,%f,%f)",&r, &x, &y, &z, &red, &g, &b);
+					myGeometry->spheres.push_back(sphere(vertex(x,y,z),r,color(red,g,b)));
+				}
+				else if(line[0]=='l'){
+					GLfloat x,y,z,r,g,b;
+					int type;
+					sscanf (line,"l %d,(%f,%f,%f),(%f,%f,%f)",&type, &x, &y, &z, &r, &g, &b);
+					myGeometry->lights.push_back(_light(vertex(x,y,z),type,color(r,g,b)));
 				}
 				else if(line[0]=='f'){
 					int v1,v2,v3,v4;
@@ -40,13 +46,12 @@ void input(void){
 						}
 					}
 					catch(int a){
-						if (a==100){ std::cout<<"Invalid Vertex Index"; 
-						}
+						if (a==100){ std::cout<<"Invalid Vertex Index"; }
 					}
 				}
 				else {
-						fputs ( line, stdout ); /* write the line */
-					}
+					fputs ( line, stdout ); /* write the line */
+				}
 			}
 			fclose ( file );
 	}

@@ -9,6 +9,10 @@ void reshape (int w, int h)
 	//gluLookAt(0,0,10,0,0,0,0,1,0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	scene *myScene=scene::getInstance();
+	myScene->editScreen(w,h);
+	raytrace();
+
 }
 void display(void)
 {
@@ -40,7 +44,7 @@ void keyboard (unsigned char key, int x, int y)
 
 		case 'w':
 			myScene->eye.z+=(GLfloat).5;
-//			std::cout<<"W pressed \n";
+			std::cout<<"W pressed \n";
 			raytrace();
 			glutPostRedisplay();
 			//std::cout<<"EYE:("<<myScene.eye.x<<","<<myScene.eye.y<<","<<myScene.eye.z<<") \n";
@@ -48,21 +52,21 @@ void keyboard (unsigned char key, int x, int y)
 
 		case 'a':
 			myScene->eye.x-=(GLfloat).2;
-			//std::cout<<"A pressed \n";
+			std::cout<<"A pressed \n";
 			raytrace();
 			glutPostRedisplay();
 			break;
 
 		case 's':
 			myScene->eye.z-=(GLfloat).5;
-			//std::cout<<"S pressed \n";
+			std::cout<<"S pressed \n";
 			raytrace();
 			glutPostRedisplay();
 			break;
 
 		case 'd':
 			myScene->eye.x+=(GLfloat).2;
-			//std::cout<<"D pressed \n";
+			std::cout<<"D pressed \n";
 			raytrace();
 			glutPostRedisplay();
 			break;

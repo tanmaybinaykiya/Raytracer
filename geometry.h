@@ -4,7 +4,7 @@
 
 #include "winged.h"
 #include "sphere.h"
-
+#include "light.h"
 
 class geometry{
 		//SINGLETON
@@ -18,6 +18,7 @@ class geometry{
 		std::vector<wEdge> edges;
 		std::vector<face> faces;
 		std::vector<sphere> spheres;
+		std::vector<_light> lights;
 		static geometry* getInstance();
 		~geometry(){
 			instanceFlag=false;

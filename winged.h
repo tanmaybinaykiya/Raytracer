@@ -5,9 +5,10 @@
 	#include <GL/freeglut.h>
 	#include <math.h>
 	#include <vector>
-
+	
 
     class wEdge;
+	class ray;
 
 	class vertex{
 		public :
@@ -28,7 +29,7 @@
 			vertex normal;
 			face(void);
 			face(int a,int b,int c,int d);
-		
+			bool isHit(ray r, GLfloat *t );
 	};
 
 	class wEdge{
@@ -44,7 +45,5 @@
 
 	vertex diff(vertex a, vertex b);
 	void unitize(vertex p);
-
-
 
 #endif

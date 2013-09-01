@@ -16,10 +16,11 @@
 	#include "sphere.h"
 	#include "light.h"	
 
-	#define SPHERE 1;
-	#define FACE 2;
+	const int SPHERE= 1;
+	const int FACE= 2;
+	const int MAX_RAYTRACING_DEPTH=4;
 
-	const int screenW=300,screenH=300;
+	const int screenW=400,screenH=400;
 	const GLfloat light_diffuse[] = {1.0, 1.0, 1.0, 0.0};		// Red diffuse light.
 	const GLfloat light_position[] = {1.0, 1.0, 1.0, 1.0};	// Infinite light location.
 	const char filename[] = "objects/input3.txt";
@@ -34,7 +35,7 @@
 	void keyboard (unsigned char key, int x, int y);
 
 //	Scene
-	void editScene(vertex i,vertex V1,vertex V2,vertex  V3,vertex V4,int w, int h);
+	//void editScene(vertex i,vertex V1,vertex V2,vertex  V3,vertex V4,int w, int h);
 
 //	GLRoutine	(WITHOUT RAYTRACER)
 	void initGL(void);
@@ -49,14 +50,13 @@
 	void initializeScene(void);
 	void initializeGeometry(void);
 	void initRT(void);
-	color isHit(ray r);
-	bool isHitQuad(ray r,face);
+	color isHit(ray r,int depth );
 	void raytrace(void);
 	void drawGeometryRT(void);
 	void rtRoutine(void);
 	GLfloat max(GLfloat a,GLfloat b);
 	void noLight(void);
-	color shade(ray r, int);
+	color shade(ray r, int intersectionType,int i);
 
 //	Input
 	void input(void);
@@ -69,5 +69,5 @@
 
 //	Ray
 
-////#define _input_
+//	#define _input_
 #endif

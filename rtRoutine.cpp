@@ -2,7 +2,7 @@
 
 void initializeScene(void){
 	GLfloat w,h,d;
-
+	scene *myScene=scene::getInstance();
 	#ifdef _input_
 		std::cout<<"Enter the width(pixels) of viewing plane :\t\n";
 		std::cin>>w;
@@ -10,17 +10,19 @@ void initializeScene(void){
 		std::cin>> h;
 		std::cout<<"Enter the distance of viewing plane from origin : \t \n";
 		std::cin>>d;
-		if (d<=eye.z){
+		if (d<=5){
 			std::cout<<"eye in front of viewing plane, nothing is visible\n Program exiting";
 			exit(0);
 		}
 	#else
 		w=3,h=3,d=-5;
 	#endif
-		scene *myScene=scene::getInstance();
-		editScene(vertex(0.0,0.0,-10.0),vertex(-w/2,h/2,d),vertex(w/2,h/2,d),vertex(w/2,-h/2,d),vertex(-w/2,-h/2,d),screenW,screenH);
+		
+		myScene->editScene(vertex(0.0,0.0,-10.0),vertex(-w/2,h/2,d),vertex(w/2,h/2,d),vertex(w/2,-h/2,d),vertex(-w/2,-h/2,d),screenW,screenH);
 		std::vector <std::vector<color> > temp (2*myScene->windowHeight, std::vector<color>(2*myScene->windowWidth));
 		myScene->buffer=temp;
+		myScene->backgroundColor=color(0,0,0);
+		myScene->depth=MAX_RAYTRACING_DEPTH;
 }
 
 void initializeGeometry(){
@@ -39,33 +41,66 @@ void initRT(void ){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-color isHit(ray r){
+color isHit(ray r,int depth){
+	//isHit calls itself DEPTH times 
+
 	geometry *myGeometry=geometry::getInstance();
-	int i=0,sphereNum=0;
+	scene *myScene=scene::getInstance();
+	unsigned int i=0,sphereNum=0,faceNum=0;
 	sphereNum=myGeometry->spheres.size();
-	bool v=false;
-	int intersectionType=-1;
+	GLfloat  t = 100000.0,t2=10000;
 
 	for(i=0;i<sphereNum;i++){
-		v=v||myGeometry->spheres[i].isHit(r);
-		intersectionType=SPHERE;
-	}
-	if(true==v){
-		return shade(r,intersectionType);
-	}
-	else return color(0,0,0);
-}
+		if(myGeometry->spheres[i].isHit(r, &t)){
+			///if the ray hits a sphere
+			/// at #intersection pt 't', find the #dot() product  with the #direction vector of the light.
+			/// 
+			unsigned int j;
+			vertex intersection =vertex(myScene->eye.x+t*r.direction.x,myScene->eye.y+t*r.direction.y,myScene->eye.z+t*r.direction.z);
+			vertex normal=vertex(myGeometry->spheres[i].centre.x-intersection.x,myGeometry->spheres[i].centre.y-intersection.y,myGeometry->spheres[i].centre.z-intersection.z);
+			for(j=0;j<myGeometry->lights.size();j++){
+				//for every light, check if the light illuminates this part of the object
+				vertex toLight=myGeometry->lights[j].direction;
+				GLfloat index=dot(normal,toLight);
+				color col;
+				if(index<=0){
+				//SPHERE ON THE OPPOSITE SIDE OF LIGHT
 
-bool isHitQuad(ray r, int index){
-	geometry *myGeometry=geometry::getInstance();
-	int numfaces=myGeometry->faces.size();
-	int	i=0;
-	//for (i=0,i<numfaces;i++){
-	//	i=i;
-	//}		
-	return false;
-}
+					continue;
+				}
+				else{
+				//light illuminates this part of the object
+					ray shadowRay=ray(intersection,myGeometry->lights[j].direction);
+					int k;
+					col.r+=(GLfloat)LAMBERT_COEFFICIENT*index*myGeometry->lights[j].colour.r;
+					col.g+=(GLfloat)LAMBERT_COEFFICIENT*index*myGeometry->lights[j].colour.g;
+					col.b+=(GLfloat)LAMBERT_COEFFICIENT*index*myGeometry->lights[j].colour.b;
+					//col=color(1,1,1);
+					for(k=0;k<sphereNum;k++){
+						if(myGeometry->spheres[k].isHit(shadowRay, &t2)){
+						// check if the point lies in the shadow region of another object
+							if(k!=i){
+								col=color(0,0,0);
+							}
+						}
+					}
+					return col;
+				}
+			}
+			
+		}
+		
+	}
+	
+	for(i=0;i<faceNum;i++){		
+		if(myGeometry->faces[i].isHit(r, &t)){
+			
+			//return shade(r,FACE,i);
+		}
+	}
 
+	return color(0,0,0);
+}
 
 
 void raytrace(void){
@@ -87,8 +122,8 @@ void raytrace(void){
 
 	for(i=0;i<2*myScene->windowHeight;i+=1){
 		for(j=0;j<2*myScene->windowWidth;j+=1){
-			color c=isHit(ray(myScene->eye,vertex((i*dx)+l,(j*dy)+b,z)));
-			glColor3f(c.r,c.g,c.b);
+			color c=isHit(ray(myScene->eye,vertex((i*dx)+l,(j*dy)+b,z)),myScene->depth);
+			glColor3f(c.r,c.g,c.b);	
 			myScene->buffer[i][j]=c;
 		}
 	}
@@ -112,8 +147,17 @@ void raytrace(void){
 	//std::cout<<"TRACE DONE\n";	
 }
 
-color shade(ray r,int i){
-	return color(1,1,1);
+color shade(ray r,int intersectionType,int i){
+	if (intersectionType == SPHERE){
+
+	}
+	else if(intersectionType == FACE){
+
+	}
+	else if(intersectionType==SPHERE + FACE){
+	
+	}
+	return color(1,1,0);
 }
 
 void drawGeometryRT(){
@@ -134,11 +178,11 @@ void drawGeometryRT(){
 
 	for(i=0;i<2*myScene->windowHeight;i+=1){
 		for(j=0;j<2*myScene->windowWidth;j+=1){
-				color c=myScene->buffer[i][j];
-				glColor3f(c.r,c.g,c.b);
-				glBegin(GL_POINTS);
-					glVertex2f((i*dx)+l,(j*dy)+b);
-				glEnd();
+			color c=myScene->buffer[i][j];
+			glColor3f(c.r,c.g,c.b);
+			glBegin(GL_POINTS);
+				glVertex2f((i*dx)+l,(j*dy)+b);
+			glEnd();
 		}
 	}
 	//std::cout<<"DRAW COMPLETE\n";

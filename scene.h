@@ -16,11 +16,14 @@ class scene{
 			vertex eye;
 			vertex planeV1,planeV2,planeV3,planeV4;
 			int windowWidth, windowHeight;
+			color backgroundColor;
+			int depth; 
 			bool rayT;
 			std::vector <std::vector<color> > buffer;
 		
 			static scene* getInstance();
 			void editScene(vertex eye, vertex planeV1, vertex planeV2, vertex  planeV3, vertex planeV4, int width, int height );
+			void editScreen(int w, int h);
 			scene::~scene(){
 				instanceFlag=false;
 			}

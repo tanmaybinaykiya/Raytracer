@@ -164,7 +164,14 @@
 
 	}
 	
+	bool face::isHit(ray r, GLfloat *t){
+		//geometry *myGeometry=geometry::getInstance();
+		//int numfaces=myGeometry->faces.size();
+		//int	i=0;
+		return false;
+	}
 	
+
 
 	wEdge::wEdge(void){
 		

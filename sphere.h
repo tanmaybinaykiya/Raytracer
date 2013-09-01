@@ -4,16 +4,19 @@
 	#include <GL/freeglut.h>
 	#include "winged.h"
 	#include "ray.h"
+	#include "color.h"
 	
 	class sphere{
 		public :
 			vertex centre;
 			GLfloat radius;
+			color colour;
+			sphere(void);
+			sphere(vertex , GLfloat ,color );
+			sphere(float ,float ,float , float , color );
 
-		sphere(void); 
-		sphere(vertex c, GLfloat r);
-		sphere(float a,float b,float c, float r);
-		bool isHit(ray r);
+			bool isHit(ray r, GLfloat *t);
+			vertex getDirection(ray r,vertex start);
 	};
 	
 #endif

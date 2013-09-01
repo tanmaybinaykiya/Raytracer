@@ -2,14 +2,24 @@
 #define __LIGHTS__
 
 #include "winged.h"
+#include "color.h"
 
-class light{
+#define POINT_LIGHT 1
+#define DIRECTIONAL_LIGHT 2
+#define LAMBERT_COEFFICIENT  0.11
+
+
+class _light{
 	public:
 		vertex location;
-		light(void);
-		light(vertex);
+		vertex direction;
+		color colour;
+		int lightType;
 
-		~light();
+		_light(void);
+		_light(vertex ,int, color);
+
+		~_light();
 };
 
 
