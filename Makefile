@@ -1,6 +1,7 @@
 CC=g++
 RM= /bin/rm -f
 CFLAGS=-lglut -lGLU -lGL -o
+
 SRC=src/
 HEADERS=headers/
 BIN=bin/
