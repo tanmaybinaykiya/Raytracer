@@ -1,9 +1,0 @@
-﻿Build started 23-12-2013 PM 02:12:23.
-     1>Project "D:\codebin\VCnOpenGL\Project\RaytracerCB\Raytracer\tempRT.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         tempRT.vcxproj -> D:\codebin\VCnOpenGL\Project\RaytracerCB\Raytracer\Debug\tempRT.exe
-     1>Done Building Project "D:\codebin\VCnOpenGL\Project\RaytracerCB\Raytracer\tempRT.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.04
