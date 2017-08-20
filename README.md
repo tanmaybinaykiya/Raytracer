@@ -19,9 +19,10 @@ The following is the BSOD as mentioned in the first screen.
 
 ![BSOD](./img/bsod.png)
 
-The following output is the intersection map of the rays with the objects.
+The following output is the intersection map of the rays with the objects.  
 
 ![Intersection Map](./img/first.png)
 
-This is the output is the combine with the intersection map of the rays with the objects and the shading using the LAMBERT properties for the object materials.
+This is the output is the combine with the intersection map of the rays with the objects and the shading using the LAMBERT properties for the object materials.  
+
 ![Final Output](./img/second.png)
