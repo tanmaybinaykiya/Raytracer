@@ -15,14 +15,14 @@ In the raytrace mode, **w**, **a**, **s**, **d** can be used to move the eye pos
 The entire project has been written in C++. Unlike most raytracers, instead of rendering an image of the output, I have rendered it on the screen using OpenGL(2.0). The program also implements an .obj file importer and is capable of displaying the geometry in both, the raytracer output as well as the through OpenGL routines.  
 The importer uses the **winged-edge** data structure for the geometry.
 
-The following is the BSOD as mentioned in the first screen.
+BSOD: 
 
 ![BSOD](./img/bsod.png)
 
-The following output is the intersection map of the rays with the objects.  
+Intersection map of the rays with the objects:  
 
 ![Intersection Map](./img/first.png)
 
-This is the output is the combine with the intersection map of the rays with the objects and the shading using the LAMBERT properties for the object materials.  
+Intersection map of the rays with the objects and the shading using the LAMBERT properties for the object materials.  
 
 ![Final Output](./img/second.png)
