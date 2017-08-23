@@ -6,7 +6,18 @@ The geometry with 2 spheres and 2 point lights is hardcoded as of now.
 
 ### Execution
 
-Please install OpenGL2.0 to execute the program.  
+To install OpenGL 2.0 on Ubuntu 16.04:
+    
+    sudo apt-get install freeglut3 freeglut3-dev libglew1.5 libglew1.5-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
+
+Compile:
+   
+    make
+
+Execute:
+
+    ./bin/main
+
 Press **r** to switch between the object and Raytrace mode.  
 In the raytrace mode, **w**, **a**, **s**, **d** can be used to move the eye position.  
 
@@ -26,3 +37,4 @@ Intersection map of the rays with the objects:
 Intersection map of the rays with the objects and the shading using the LAMBERT properties for the object materials.  
 
 ![Final Output](./img/second.png)
+
